@@ -1,6 +1,9 @@
 import React from "react";
 import logo from "../../../assets/bookingIcon.png";
+import "aos/dist/aos.css";
+import Aos from "aos";
 
+Aos.init();
 const Banner2Card = ({ book }) => {
   //   console.log(book);
   const { name, description } = book;
