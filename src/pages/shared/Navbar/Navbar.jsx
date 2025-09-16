@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import ProFastLogo from "../ProFastLogo/ProFastLogo";
 
 const Navbar = () => {
@@ -13,6 +13,9 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to="/about">About Us</NavLink>
+      </li>
+      <li>
+        <NavLink to="/send">Pricing</NavLink>
       </li>
     </>
   );
@@ -42,15 +45,17 @@ const Navbar = () => {
             {navItems}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
+        <Link to="/">
           <ProFastLogo />
-        </a>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <Link to="/login" className="btn btn-primary text-white">
+          Login
+        </Link>
       </div>
     </div>
   );
