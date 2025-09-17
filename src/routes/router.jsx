@@ -87,6 +87,7 @@ export const router = createBrowserRouter([
             <SendParcel></SendParcel>
           </PrivateRoute>
         ),
+        loader: () => fetch("./serviceCenter.json"),
       },
     ],
   },
