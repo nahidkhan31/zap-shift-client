@@ -8,75 +8,43 @@ import Coverage from "../pages/Coverage/Coverage";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import PrivateRoute from "../route/PrivateRoute";
 import About from "../pages/About/About";
+import DashboardLayout from "../layout/DashboardLayout";
+import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: RootLayout,
+    element: <RootLayout />,
     children: [
-      {
-        index: true,
-        Component: Home,
-      },
+      { index: true, element: <Home /> },
       {
         path: "coverage",
-        Component: Coverage,
-        loader: () => fetch("./serviceCenter.json"),
+        element: <Coverage />,
+        loader: () => fetch("/serviceCenter.json"),
       },
       {
         path: "about",
-        Component: About,
+        element: <About />,
         children: [
           {
-            index: true, // default tab -> story
-            element: (
-              <p>
-                We started with a simple promise — to make parcel delivery fast,
-                reliable, and stress-free. Over the years, our commitment to
-                real-time tracking, efficient logistics, and customer-first
-                service has made us a trusted partner for thousands.
-              </p>
-            ),
+            index: true,
+            element: <p>Default Story...</p>,
           },
           {
             path: "story",
-            element: (
-              <p>
-                We started with a simple promise — to make parcel delivery fast,
-                reliable, and stress-free. Over the years, our commitment to
-                real-time tracking, efficient logistics, and customer-first
-                service has made us a trusted partner for thousands.
-              </p>
-            ),
+            element: <p>Default Story...</p>,
           },
           {
             path: "mission",
-            element: (
-              <p>
-                Our mission is to revolutionize delivery by combining
-                efficiency, transparency, and care. We aim to ensure every
-                package, big or small, reaches safely and on time.
-              </p>
-            ),
+            element: <p>Mission Content...</p>,
           },
           {
             path: "success",
-            element: (
-              <p>
-                Thousands of happy customers and countless successful deliveries
-                speak for us. We continue to grow with innovation and trust at
-                the core.
-              </p>
-            ),
+            element: <p>Mission Content...</p>,
           },
           {
             path: "team",
-            element: (
-              <p>
-                Behind every delivery is a dedicated team working tirelessly.
-                Together, we ensure seamless service, day after day.
-              </p>
-            ),
+            element: <p>Mission Content...</p>,
           },
         ],
       },
@@ -84,24 +52,32 @@ export const router = createBrowserRouter([
         path: "send",
         element: (
           <PrivateRoute>
-            <SendParcel></SendParcel>
+            <SendParcel />
           </PrivateRoute>
         ),
-        loader: () => fetch("./serviceCenter.json"),
+        loader: () => fetch("/serviceCenter.json"),
       },
     ],
   },
   {
     path: "/",
-    Component: AuthLayout,
+    element: <AuthLayout />,
+    children: [
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
-        path: "login",
-        Component: Login,
-      },
-      {
-        path: "register",
-        Component: Register,
+        path: "myParcels",
+        element: <MyParcels />,
       },
     ],
   },

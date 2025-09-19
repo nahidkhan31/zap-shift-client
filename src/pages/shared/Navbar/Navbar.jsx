@@ -1,8 +1,18 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
 import ProFastLogo from "../ProFastLogo/ProFastLogo";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+  // console.log(user.email);
+  const handleLogOut = () => {
+    logOut()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => crossOriginIsolated.log(error));
+  };
   const navItems = (
     <>
       <li>
@@ -17,6 +27,13 @@ const Navbar = () => {
       <li>
         <NavLink to="/send">Pricing</NavLink>
       </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -53,10 +70,16 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <Link to="/login" className="btn btn-primary text-white">
-          Login
-        </Link>
-      </div>
+        {user ? (
+          <button onClick={handleLogOut} className="btn btn-primary text-white">
+            Log Out
+          </button>
+        ) : (
+          <Link to="/login" className="btn btn-primary text-white">
+            Login
+          </Link>
+        )}
+      </div> 
     </div>
   );
 };

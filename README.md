@@ -13,3 +13,5 @@ Installation
 9. npm install firebase
 10. npm install leaflet react-leaflet
 11. npm install sweetalert2
+12. npm install axios
+13. npm i @tanstack/react-query

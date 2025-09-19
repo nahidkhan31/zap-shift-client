@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const generateTrackingID = () => {
   const date = new Date();
@@ -19,8 +20,10 @@ const SendParcel = () => {
     formState: { errors },
   } = useForm();
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const serviceCenters = useLoaderData();
+  // console.log(serviceCenters);
   // Extract unique regions
   const uniqueRegions = [...new Set(serviceCenters.map((w) => w.region))];
   // Get districts by region
@@ -106,12 +109,27 @@ const SendParcel = () => {
           ...data,
           cost: totalCost,
           created_by: user.email,
+          Created_Name: user.name,
           payment_status: "unpaid",
           delivery_status: "not_collected",
           creation_date: new Date().toISOString(),
           tracking_id: tracking_id,
         };
         console.log("Ready for payment:", parcelData);
+        //data pass to server
+        axiosSecure.post("/parcels", parcelData).then(async (res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            //Here you could redirect to a payment page or trigger a payment model
+            Swal.fire({
+              title: "Redirecting...",
+              text: "Proceeding to payment gateway.",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          }
+        });
       }
     });
   };

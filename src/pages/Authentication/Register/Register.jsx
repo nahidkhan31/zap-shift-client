@@ -32,14 +32,28 @@ const Register = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset className="fieldset">
             {/* name */}
-            {/* <label className="label">Name</label>
+            <label className="label">Name</label>
             <input
               type="name"
               {...register("name", { required: true })}
               className="input"
               placeholder="Name"
-            /> */}
-            {/* email field */}
+            />
+            {errors.email?.type === "required" && (
+              <p className="text-red-500">Name is required.</p>
+            )}
+            {/* photo  field */}
+            <label className="label">Photo URL</label>
+            <input
+              type="Photo"
+              {...register("photo", { required: true })}
+              className="input"
+              placeholder="Photo URL"
+            />
+            {errors.email?.type === "required" && (
+              <p className="text-red-500">Photo URL is required.</p>
+            )}
+            {/* email Field */}
             <label className="label">Email</label>
             <input
               type="email"
