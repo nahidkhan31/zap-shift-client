@@ -1,5 +1,7 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router";
+import ProFastLogo from "../pages/shared/ProFastLogo/ProFastLogo";
+import { FaHome, FaBoxOpen, } from 'react-icons/fa';
 
 const DashboardLayout = () => {
   return (
@@ -31,6 +33,28 @@ const DashboardLayout = () => {
         {/* Page content here */}
         <Outlet></Outlet>
         {/* Page content here */}
+      </div>
+      <div className="drawer-side">
+        <label
+          htmlFor="my-drawer-2"
+          aria-label="close sidebar"
+          className="drawer-overlay"></label>
+        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+          {/* Sidebar content here */}
+          <ProFastLogo></ProFastLogo>
+          <li>
+            <NavLink to="/dashboard">
+              <FaHome className="inline-block mr-2" />
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/myParcels">
+              <FaBoxOpen className="inline-block mr-2" />
+              My Parcels
+            </NavLink>
+          </li>
+        </ul>
       </div>
     </div>
   );

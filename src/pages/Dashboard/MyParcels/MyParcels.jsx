@@ -2,19 +2,28 @@ import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { Navigate } from "react-router";
+import {  useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import Loading from "../../Loading/Loading";
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: parcels = [], refetch } = useQuery({
+  const navigate = useNavigate()
+
+  const {
+    data: parcels = [],
+    refetch,
+    isLoading: parcelsLoading,
+   
+  } = useQuery({
     queryKey: ["my-parcels", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
       return res.data;
     },
   });
+
   console.log(parcels);
 
   const handleView = (id) => {
@@ -23,7 +32,7 @@ const MyParcels = () => {
   };
   const handlePay = (id) => {
     console.log("Proceed to payment for", id);
-    Navigate(`/dashboard/payment/${id}`);
+    navigate(`/dashboard/payment/${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -61,6 +70,11 @@ const MyParcels = () => {
   const formatDate = (iso) => {
     return new Date(iso).toLocaleString(); // Format: "6/22/2025, 3:11:31 AM"
   };
+
+  if (parcelsLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="overflow-x-auto shadow-md rounded-xl">
       <table className="table table-zebra w-full">

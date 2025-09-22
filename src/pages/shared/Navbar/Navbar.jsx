@@ -11,7 +11,7 @@ const Navbar = () => {
       .then((result) => {
         console.log(result);
       })
-      .catch((error) => crossOriginIsolated.log(error));
+      .catch((error) => console.log(error));
   };
   const navItems = (
     <>
@@ -79,7 +79,7 @@ const Navbar = () => {
             Login
           </Link>
         )}
-      </div> 
+      </div>
     </div>
   );
 };
